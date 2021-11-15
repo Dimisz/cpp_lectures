@@ -16,8 +16,9 @@ void print_nums(vector<int> vec){
 int main(){
   
   bool running{true};
+  string choice{};
   
-  while(running){
+  do {
     
     cout << "-----------------"<< endl;
     cout << "Options: " << endl;
@@ -29,7 +30,6 @@ int main(){
     cout << "Q - Quit\n" << endl;
     
     cout << "Enter your choice: " << endl;
-    string choice{};
     cin >> choice;
     
     
@@ -84,7 +84,7 @@ int main(){
     else{
         cout << "Unknown selection, please try again" << endl;
     }
-  }
+  } while(choice != "q" && choice != "Q");
   
   return 0;
 }
