@@ -33,17 +33,18 @@ int main(){
     cin >> choice;
     
     
-    if (choice == "P"){
+    
+    if (choice == "P" || choice == "p"){
         print_nums(vec);
     }
-    else if (choice == "A"){
+    else if (choice == "A" || choice == "a"){
         int num{};
         cout << "Enter a number to append: ";
         cin >> num;
         vec.push_back(num);
         cout << "Number appended";
     }
-    else if (choice == "M"){
+    else if (choice == "M" || choice == "m"){
         if (vec.size() > 0){
           int sum {};
           double mean{};
@@ -57,7 +58,7 @@ int main(){
           cout << "The list is empty" << endl;
         }
     }
-    else if (choice == "S"){
+    else if (choice == "S" || choice == "s"){
         int min_element = vec.at(0);
         // solved as a loop as part of the challenge
         for (auto i : vec){
@@ -67,7 +68,7 @@ int main(){
         }
         cout << "The smallest element in the list is: " << min_element << endl;
     }
-    else if (choice == "L"){
+    else if (choice == "L"  || choice == "l"){
         int max_element = vec.at(0);
         for (auto i : vec){
           if(i > max_element){
@@ -76,7 +77,7 @@ int main(){
         }
         cout << "The largest element in the list is: " << max_element << endl;
     }
-    else if (choice == "Q"){
+    else if (choice == "Q"  || choice == "q"){
         cout << "Goodbye!" << endl;
         running = false;
     }
