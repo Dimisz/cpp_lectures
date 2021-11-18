@@ -15,9 +15,9 @@
 
 using namespace std;
 
-map<char, int> BuildCharCounter(string& word){
+map<char, int> BuildCharCounter(const string& word){
   map<char, int> char_counter;
-  for (const auto& i : word){
+  for (char i : word){
     ++char_counter[i];
   }
   return char_counter;
