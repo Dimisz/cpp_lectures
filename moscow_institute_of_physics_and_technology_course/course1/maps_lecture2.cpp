@@ -36,7 +36,9 @@ int main(){
   PrintMap(m);
   
   // map.erase(key) -> takes only one arg
+  cout << "Erasing.. " << endl;
   m.erase("three");
+  m["five"] += 5;
   PrintMap(m);
   
   // Counting words in vector using map
@@ -59,6 +61,18 @@ int main(){
     }
     cout << endl;
   }
+  
+  cout << "Quiz" <<endl;
+  map<int, string> me = {{1, "odd"}, {2, "even"}, {1, "one"}};
+  me[2] = "two";
+  me.erase(1);
+  me[3] = "three";
+  me.erase(4);
+  me[5] = "five";
+  cout << me.size() << endl;
+  string x = me[10];
+  cout << me.size();
+  
   
   
   return 0;
