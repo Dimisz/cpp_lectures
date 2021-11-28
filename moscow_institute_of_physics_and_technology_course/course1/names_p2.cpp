@@ -2,7 +2,6 @@
 #include <map>
 #include <vector>
 
-//to do tomorrrow
 using namespace std;
 
 
@@ -74,20 +73,32 @@ public:
       }
     }
     //last_vec.pop_back();
+//    cout << "=================" << endl;
+//    cout << "First name vec: " << endl;
+//    for (const auto& i : first_vec){
+//      cout << i << " ";
+//    }
+//    cout << endl;
+//
+//    cout << "Last name vec: " << endl;
+//    for (const auto& i : last_vec){
+//      cout << i << " ";
+//    }
+//    cout << "==================" << endl;
     
     string firsts_as_str = "";
-    if (first_vec.size() != 0){
+    if (first_vec.size() > 1){
       firsts_as_str = " (";
-      for (int i = 0; i < first_vec.size()-1; ++i){
+      for (int i = first_vec.size()-1; i >= ; --i){
         firsts_as_str += first_vec[i] + ", ";
       }
       firsts_as_str += ")";
     }
-    
+
     string lasts_as_str = "";
-    if (last_vec.size() != 0){
+    if (last_vec.size() > 1){
       lasts_as_str = " (";
-      for (int i = 0; i < last_vec.size()-1; ++i){
+      for (int i = last_vec.size()-1; i >= ; ++i){
         lasts_as_str += last_vec[i] + ", ";
       }
       lasts_as_str += ")";
