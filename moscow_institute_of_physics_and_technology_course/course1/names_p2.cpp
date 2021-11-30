@@ -1,213 +1,155 @@
 #include <iostream>
+#include <algorithm>
 #include <map>
 #include <vector>
-#include <set>
+#include <string>
+
 
 using namespace std;
 
+vector<string> FindNamesHistory(const map<int, string>& names_by_year, int year){
+  
+  vector<string> names;
+  // iterate through the history in chronological order
+  for (const auto& item : names_by_year){
+    //if name is not from the future & differs from the previous
+    if (item.first <= year && (names.empty() || names.back() != item.second)){
+      // add the name to the history
+      names.push_back(item.second);
+    }
+  }
+  return names;
+}
+
+string BuildJoinedName(vector<string> names){
+  // if no history - the name is Incognito
+  if (names.empty()){
+    return "";
+  }
+  // reverse chronological order
+  reverse(begin(names), end(names));
+  
+  //start building full name from the last one
+  string joined_name = names[0];
+  
+  //iterate all subsequent names
+  for (int i = 1; i < names.size(); ++i){
+    if (i == 1){
+      // if that's the first name in history
+      // separate it with a "("
+      joined_name += " (";
+    } else {
+      // if its not the first name in history
+      // separate it by ", "
+      joined_name += " ,";
+    }
+    // add the name itself
+    joined_name += names[i];
+  }
+  
+  // if history has more than 1 name cloose the bracket
+  if(names.size() > 1){
+    joined_name += ")";
+  }
+  // the name with history is ready
+  return joined_name;
+}
+
+string BuildFullName(const string& first_name, const string& last_name){
+  if (first_name.empty() && last_name.empty()){
+    return "Incognito";
+  } else if (first_name.empty()){
+    return last_name + " with unknown first name";
+  } else if (last_name.empty()) {
+    return first_name + " with unknown last name";
+  } else {
+    return first_name + " " + last_name;
+  }
+}
 
 class Person {
-public:
-  void ChangeFirstName(int year, const string& first_name) {
-    // change name to 'first_name' in the year of 'year'
-    first_name_map[year] = first_name;
-    
-  }
-  void ChangeLastName(int year, const string& last_name) {
-    // change name to 'last_name' in the year of 'year'
-    last_name_map[year] = last_name;
-    
-  }
-  string GetFullName(int year) {
-    // get first and last names in ta given year
-    string first = "unk";
-    string last = "unk";
-    //check first name first
-    for (const auto& [y, n] : first_name_map){
-      if (year >= y){
-        first = n;
-      }
+  public:
+    void ChangeFirstName(int year, const string& first_name){
+      first_names[year] = first_name;
     }
-    
-    for (const auto& [y, n] : last_name_map){
-      if (year >= y){
-        last = n;
-      }
+    void ChangeLastName(int year, const string& last_name){
+      last_names[year] = last_name;
     }
-    
-    string result;
-    if (first == "unk" && last == "unk"){
-      result = "Incognito";
-    }
-    else if (first == "unk"){
-      result = last + " with unknown first name";
-    }
-    else if (last == "unk"){
-      result = first + " with unknown last name";
-    }
-    else {
-      result = first + " " + last;
-    }
-    return result;
-  }
   
-  string GetFullNameWithHistory(int year) {
-    // get first and last names in ta given year
-    string first_n = "unk";
-    vector<string> first_vec;
-    string last_n = "unk";
-    vector<string> last_vec;
-    
-    //check first name first
-    for (const auto& [y, n] : first_name_map){
-      if (year >= y){
-        
-        first_n = n;
-        if (first_vec.size() == 0){
-          first_vec.push_back(first_n);
-       }
-        else if (first_n != first_vec.back()){
-          first_vec.push_back(first_n);
-        }
-      }
-    }
-    
-    
-    for (const auto& [y, n] : last_name_map){
-      if (year >= y){
-        last_n = n;
-        if (last_vec.size() == 0){
-          last_vec.push_back(last_n);
-       }
-        else if (last_n != last_vec.back()){
-          last_vec.push_back(last_n);
-        }
-      }
-    }
-    
-    
-    string firsts_as_str = "";
-    //vector<string> firsts_checker;
-    if (first_vec.size() > 1){
+    string GetFullName(int year){
+      const vector<string> first_names_history = FindFirstNamesHistory(year);
+      const vector<string> last_names_history = FindLastNamesHistory(year);
       
-      firsts_as_str = " (";
-      for (int i = first_vec.size() - 2; i >= 0; --i){
-        if (i == 0){
-          firsts_as_str += first_vec.at(i);
-        }
-        else{
-          firsts_as_str += first_vec.at(i) + ", ";
-        }
+      //prepare data for BuildFullName
+      //take latest first and last names and leave them
+      // blank if they are unknown
+      string first_name;
+      string last_name;
+      if(!first_names_history.empty()){
+        first_name = first_names_history.back();
       }
-      firsts_as_str += ")";
-    }
-
-    string lasts_as_str = "";
-    if (last_vec.size() > 1){
-      lasts_as_str = " (";
-      for (int i = last_vec.size() - 2; i >= 0; --i){
-        if (i == 0){
-          lasts_as_str += last_vec.at(i);
-        }
-        else{
-          lasts_as_str += last_vec.at(i) + ", ";
-        }
+      if(!last_names_history.empty()){
+        last_name = last_names_history.back();
       }
-      lasts_as_str += ")";
+      return BuildFullName(first_name, last_name);
     }
-    
-    string result;
-    if (first_n == "unk" && last_n == "unk"){
-      result = "Incognito";
-    }
-    else if (first_n == "unk"){
-        result = last_n + lasts_as_str + " with unknown first name";
-    }
-    else if (last_n == "unk"){
-      result = first_n + firsts_as_str + " with unknown last name";
-    }
-    else {
-      result = first_n + firsts_as_str + " " + last_n + lasts_as_str;
-    }
-    return result;
-  }
-    
   
+    string GetFullNameWithHistory(int year){
+      // get first name with its history
+      const string first_name = BuildJoinedName(FindFirstNamesHistory(year));
+      // get last name with its history
+      const string last_name = BuildJoinedName(FindLastNamesHistory(year));
+      // join them with our ready function
+      return BuildFullName(first_name, last_name);
+    }
 private:
-  map<int, string> first_name_map;
-  map<int, string> last_name_map;
+  vector<string> FindFirstNamesHistory(int year){
+    return FindNamesHistory(first_names, year);
+  }
+  vector<string> FindLastNamesHistory(int year){
+    return FindNamesHistory(last_names, year);
+  }
+  
+  map<int, string> first_names;
+  map<int, string> last_names;
 };
 
 
-//TEST 1
-//int main() {
-//  Person person;
-//
-//  person.ChangeFirstName(1900, "Eugene");
-//  person.ChangeLastName(1900, "Sokolov");
-//  person.ChangeLastName(1910, "Sokolov");
-//  person.ChangeFirstName(1920, "Evgeny");
-//  person.ChangeLastName(1930, "Sokolov");
-//  cout << person.GetFullNameWithHistory(1940) << endl;
-//  cout << person.GetFullName(1940) << endl;
-//
-//
-//  return 0;
-//}
-
-//TEST 2
-//int main() {
-//  Person person;
-//
-//  person.ChangeFirstName(1965, "Polina");
-//  person.ChangeLastName(1967, "Sergeeva");
-//  for (int year : {1900, 1965, 1990}) {
-//    cout << person.GetFullNameWithHistory(year) << endl;
-//  }
-//
-//  person.ChangeFirstName(1970, "Appolinaria");
-//  for (int year : {1969, 1970}) {
-//    cout << person.GetFullNameWithHistory(year) << endl;
-//  }
-//
-//  person.ChangeLastName(1968, "Volkova");
-//  for (int year : {1969, 1970}) {
-//    cout << person.GetFullNameWithHistory(year) << endl;
-//  }
-//
-//  person.ChangeFirstName(1990, "Polina");
-//  person.ChangeLastName(1990, "Volkova-Sergeeva");
-//  cout << person.GetFullNameWithHistory(1990) << endl;
-//
-//  person.ChangeFirstName(1966, "Pauline");
-//  cout << person.GetFullNameWithHistory(1966) << endl;
-//
-//  person.ChangeLastName(1960, "Sergeeva");
-//  for (int year : {1960, 1967}) {
-//    cout << person.GetFullNameWithHistory(year) << endl;
-//  }
-//
-//  person.ChangeLastName(1961, "Ivanova");
-//  cout << person.GetFullNameWithHistory(1967) << endl;
-//
-//  return 0;
-//}
-
-
-//TEST 3
 int main() {
   Person person;
-
+  
   person.ChangeFirstName(1965, "Polina");
-  person.ChangeFirstName(1965, "Appolinaria");
-
-  person.ChangeLastName(1965, "Sergeeva");
-  person.ChangeLastName(1965, "Volkova");
-  person.ChangeLastName(1965, "Volkova-Sergeeva");
-
-  for (int year : {1964, 1965, 1966}) {
+  person.ChangeLastName(1967, "Sergeeva");
+  for (int year : {1900, 1965, 1990}) {
     cout << person.GetFullNameWithHistory(year) << endl;
   }
-
+  
+  person.ChangeFirstName(1970, "Appolinaria");
+  for (int year : {1969, 1970}) {
+    cout << person.GetFullNameWithHistory(year) << endl;
+  }
+  
+  person.ChangeLastName(1968, "Volkova");
+  for (int year : {1969, 1970}) {
+    cout << person.GetFullNameWithHistory(year) << endl;
+  }
+  
+  person.ChangeFirstName(1990, "Polina");
+  person.ChangeLastName(1990, "Volkova-Sergeeva");
+  cout << person.GetFullNameWithHistory(1990) << endl;
+  
+  person.ChangeFirstName(1966, "Pauline");
+  cout << person.GetFullNameWithHistory(1966) << endl;
+  
+  person.ChangeLastName(1960, "Sergeeva");
+  for (int year : {1960, 1967}) {
+    cout << person.GetFullNameWithHistory(year) << endl;
+  }
+  
+  person.ChangeLastName(1961, "Ivanova");
+  cout << person.GetFullNameWithHistory(1967) << endl;
+  
   return 0;
 }
+
+
