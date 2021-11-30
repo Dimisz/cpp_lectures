@@ -49,6 +49,65 @@ public:
     }
     return result;
   }
+  
+  string GetFullNameWithHistory(int year) {
+    // get first and last names in ta given year
+    string first = "unk";
+    set<string> firsts;
+    string last = "unk";
+    set<string> lasts;
+    //check first name first
+    for (const auto& [y, n] : first_name_map){
+      if (year >= y){
+        first = n;
+        firsts.insert(first);
+      }
+    }
+    firsts.erase(first);
+    
+    for (const auto& [y, n] : last_name_map){
+      if (year >= y){
+        last = n;
+        lasts.insert(last);
+      }
+    }
+    lasts.erase(last);
+    
+    string firsts_as_str = "";
+    if (firsts.size() != 0){
+      firsts_as_str = " (";
+      for (auto& i : firsts){
+        firsts_as_str += i + ", ";
+      }
+      firsts_as_str += ")";
+    }
+    
+    string lasts_as_str = "";
+    if (lasts.size() != 0){
+      lasts_as_str = " (";
+      for (auto& i : lasts){
+        lasts_as_str += i + ", ";
+      }
+      lasts_as_str += ")";
+    }
+    
+    string result;
+    if (first == "unk" && last == "unk"){
+      result = "Incognito";
+    }
+    else if (first == "unk"){
+        result = last + lasts_as_str + " with unknown first name";
+    }
+    else if (last == "unk"){
+      result = first + firsts_as_str + " with unknown last name";
+    }
+    else {
+      result = first + firsts_as_str + " " + last + lasts_as_str;
+    }
+    return result;
+  }
+    }
+  
 private:
   map<int, string> first_name_map;
   map<int, string> last_name_map;
