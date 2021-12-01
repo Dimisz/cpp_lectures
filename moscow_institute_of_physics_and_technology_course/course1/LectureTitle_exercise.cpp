@@ -5,21 +5,21 @@ using namespace std;
 
 struct Specialization{
   string value;
-  explicit Specialization(string new_value){
+  explicit Specialization(const string& new_value){
     value = new_value;
   }
 };
 
 struct Course{
   string value;
-  explicit Course(string new_value){
+  explicit Course(const string& new_value){
     value = new_value;
   }
 };
 
 struct Week{
   string value;
-  explicit Week(string new_value){
+  explicit Week(const string& new_value){
     value = new_value;
   }
 };
@@ -30,7 +30,7 @@ struct LectureTitle {
   string week;
   
   //constructor
-  LectureTitle(Specialization new_specialization, Course new_course, Week new_week){
+  LectureTitle(const Specialization& new_specialization, const Course& new_course, const Week& new_week){
     specialization = new_specialization.value;
     course = new_course.value;
     week = new_week.value;
