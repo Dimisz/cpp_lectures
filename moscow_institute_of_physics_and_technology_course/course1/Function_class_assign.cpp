@@ -93,7 +93,7 @@ double ComputeQualityByWeight(const Params& params,
   return function.Apply(weight);
 }
 
-//
+
 int main() {
   Image image = {10, 2, 6};
   Params params = {4, 2, 6};
