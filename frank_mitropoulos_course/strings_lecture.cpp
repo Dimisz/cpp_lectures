@@ -72,10 +72,78 @@ int main(){
 //  cout << endl;
   
   //Range based loop
-  for (char c : s1){
-    cout << c << "-";
-  }
-  cout << endl;
+//  for (char c : s1){
+//    cout << c << "-";
+//  }
+//  cout << endl;
+  
+  
+  //SUBSTRING
+//  cout << "\nSubstring" << "\n-----------------------" << endl;
+//  s1 = "This is a test";
+//
+//  cout << s1.substr(0,4) << endl;
+//  cout << s1.substr(5, 2) << endl;
+//  cout << s1.substr(10, 4) << endl;
+  
+  
+  //ERASE
+//  cout << "\nErasing" << "\n-----------------------" << endl;
+//  s1 = "This is a test";
+//  s1.erase(0, 5);
+//  cout << "s1 is now: " << s1 << endl;
+  
+  
+  //GETLINE
+//  cout << "\ngetline" << "\n-----------------------" << endl;
+//  string full_name {};
+//
+//  cout << "Enter your full name:" << endl;
+//  getline(cin, full_name);
+//
+//  cout << "Your full name is: " << full_name << endl;
+  
+  
+  //FIND
+//  cout << "\nfind" << "\n-----------------------" << endl;
+//
+//  s1 = "The secret word is Boo";
+//  string word {};
+//
+//  cout << "Enter the word to find: " << endl;
+//  cin >> word;
+//
+//  size_t position = s1.find(word);
+//  if (position != string::npos){
+//    cout << "Found " << word << " at position: " << position << endl;
+//  }
+//  else {
+//    cout << "Sorry, " << word << " not found" << endl;
+//  }
+
+  // EXERCISE 1
+//  string unformatted_full_name {"StephenHawking"};
+//
+//  string first_name, last_name, formatted_full_name;
+//  first_name = unformatted_full_name.substr(0,7);
+//  last_name = unformatted_full_name.substr(7, 7);
+//  formatted_full_name = first_name + last_name;
+//  formatted_full_name.insert(7, " ");
+//
+//  cout << formatted_full_name;
+  
+  //EXERCISE 2
+  string journal_entry_1 {"Isaac Newton"};
+  string journal_entry_2 {"Leibniz"};
+      
+      
+  size_t erase_index = journal_entry_1.find(" ");
+  journal_entry_1.erase(0, erase_index+1);
+      
+  if (journal_entry_2 < journal_entry_1)
+    journal_entry_1.swap(journal_entry_2);
+      
+  cout << journal_entry_1 << "\n" << journal_entry_2;
   
   return 0;
 }
