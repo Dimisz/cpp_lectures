@@ -1,8 +1,8 @@
 #include <iostream>
 #include <numeric>
-#include <algorithm>
+//#include <algorithm>
 #include <sstream>
-#include <iomanip>
+//#include <iomanip>
 #include <set>
 #include <map>
 #include <vector>
@@ -36,8 +36,8 @@ public:
       denominator = -d / gcd(n, d);
     }
     else if ((n < 0) && (d < 0)){
-      numerator = n / gcd(n, d);
-      denominator = d / gcd(n, d);
+      numerator = -n / gcd(n, d);
+      denominator = -d / gcd(n, d);
     }
     else {
       numerator = n / gcd(n, d);
