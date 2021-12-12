@@ -126,6 +126,8 @@ istream& operator>>(istream& stream, Rational& r){
   
   return stream;
 }
+
+
 //=======================
 //=======================
 //========TEST 1 ========
