@@ -24,7 +24,7 @@ public:
   
   Rational(int n, int d){
     if (d == 0){
-      throw invalid_argument("invalid argument");
+      throw invalid_argument("Invalid argument");
     }
     else if (n == 0){
       numerator = 0;
@@ -102,7 +102,7 @@ Rational operator*(const Rational& lhs, const Rational& rhs){
 
 Rational operator/(const Rational& lhs, const Rational& rhs){
   if(rhs.Numerator() == 0){
-    throw domain_error("domain error");
+    throw domain_error("Division by zero");
   } else {
   int num = (lhs.Numerator() * rhs.Denominator());
   int den = (lhs.Denominator() * rhs.Numerator());
@@ -385,21 +385,73 @@ istream& operator>>(istream& stream, Rational& r){
 
 //TEST 6
 
-int main() {
-    try {
-        Rational r(1, 0);
-        cout << "Doesn't throw in case of zero denominator" << endl;
-        return 1;
-    } catch (invalid_argument&) {
-    }
+//int main() {
+//    try {
+//        Rational r(1, 0);
+//        cout << "Doesn't throw in case of zero denominator" << endl;
+//        return 1;
+//    } catch (invalid_argument&) {
+//    }
+//
+//    try {
+//        auto x = Rational(1, 2) / Rational(0, 1);
+//        cout << "Doesn't throw in case of division by zero" << endl;
+//        return 2;
+//    } catch (domain_error&) {
+//    }
+//
+//    cout << "OK" << endl;
+//    return 0;
+//}
 
-    try {
-        auto x = Rational(1, 2) / Rational(0, 1);
-        cout << "Doesn't throw in case of division by zero" << endl;
-        return 2;
-    } catch (domain_error&) {
-    }
+//IMPLEMENTING CALCULATOR
 
-    cout << "OK" << endl;
-    return 0;
+int main(){
+  
+  int n1, d1, n2, d2;
+  char sep1, operation, sep2;
+  cin >> n1 >> sep1 >> d1 >> operation >> n2 >> sep2 >> d2;
+  
+//
+//  cout << "n1: " << n1 << " d1: " << d1
+//       << " operation: " << operation
+//  << "n2: " << n2 << " d2: " << d2 << endl;
+  
+  if (operation == '/'){
+    try{
+      Rational r;
+      r = Rational (n1, d1) / Rational(n2, d2);
+      cout << r.Numerator() << "/" << r.Denominator() << endl;
+    } catch (exception& e){
+      cout << e.what() << endl;
+    }
+  }
+  else if (operation == '+'){
+    try{
+      Rational r;
+      r = Rational (n1, d1) + Rational(n2, d2);
+      cout << r.Numerator() << "/" << r.Denominator() << endl;
+    } catch (exception& e){
+      cout << e.what() << endl;
+    }
+  }
+  else if (operation == '-'){
+    try{
+      Rational r;
+      r = Rational (n1, d1) - Rational(n2, d2);
+      cout << r.Numerator() << "/" << r.Denominator() << endl;
+    } catch (exception& e){
+      cout << e.what() << endl;
+    }
+  }
+  else if (operation == '*'){
+    try{
+      Rational r;
+      r = Rational (n1, d1) * Rational(n2, d2);
+      cout << r.Numerator() << "/" << r.Denominator() << endl;
+    } catch (exception& e){
+      cout << e.what() << endl;
+    }
+  }
+  return 0;
 }
