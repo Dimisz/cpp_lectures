@@ -6,43 +6,21 @@ using namespace std;
 void PrintGrid(char grid[3][3]);
 void CheckXWin(char grid[3][3], bool& is_game_over);
 void CheckOWin(char grid[3][3], bool& is_game_over);
+void CheckTie(char grid[3][3], bool& is_game_over);
 void XMove(char grid[3][3], bool& x_moved, bool& is_game_over);
 void OMove(char grid[3][3], bool& o_moved, bool& is_game_over);
+void RunGame();
+void AskForNewGame();
 
 
 int main()
 {
-  bool is_game_over = false;
-  char grid[3][3] = {
-    {' ', ' ', ' '},
-    {' ', ' ', ' '},
-    {' ', ' ', ' '}
-  };
-  PrintGrid(grid);
-  cout << "X starts!" << endl;
-  
-  while(!is_game_over)
-  {
-    cout << "================" << endl;
-    cout << "X moves" << endl;
-    bool x_moved = false;
-    while(!x_moved)
-    {
-      XMove(grid, x_moved, is_game_over);
-    }
-    if (is_game_over) break;
-    
-    cout << "================" << endl;
-    cout << "O moves" << endl;
-    bool o_moved = false;
-    while(!o_moved)
-    {
-      OMove(grid, o_moved, is_game_over);
-    }
-    
-  }
+  RunGame();
   return 0;
 }
+
+
+
 
 void PrintGrid(char grid[3][3])
 {
@@ -73,6 +51,7 @@ void CheckXWin(char grid[3][3], bool& is_game_over)
   {
     cout << "X wins!" << endl;
     is_game_over = true;
+    AskForNewGame();
   }
 }
 
@@ -92,6 +71,7 @@ void CheckOWin(char grid[3][3], bool& is_game_over)
   {
     cout << "O wins!" << endl;
     is_game_over = true;
+    AskForNewGame();
   }
 }
 
@@ -120,6 +100,7 @@ void XMove(char grid[3][3], bool& x_moved, bool& is_game_over)
     x_moved = true;
     PrintGrid(grid);
     CheckXWin(grid, is_game_over);
+    CheckTie(grid, is_game_over);
   }
 }
   
@@ -148,5 +129,65 @@ void XMove(char grid[3][3], bool& x_moved, bool& is_game_over)
       o_moved = true;
       PrintGrid(grid);
       CheckOWin(grid, is_game_over);
+      CheckTie(grid, is_game_over);
     }
   }
+
+
+void CheckTie(char grid[3][3], bool& is_game_over)
+{
+  if(
+     (grid[0][0] != ' ')&&(grid[0][1] != ' ')&&(grid[0][2] != ' ')&&
+     (grid[1][0] != ' ')&&(grid[1][1] != ' ')&&(grid[1][2] != ' ')&&
+     (grid[2][0] != ' ')&&(grid[2][1] != ' ')&&(grid[2][2] != ' ')
+     )
+  {
+    cout << "That's a tie!" << endl;
+    AskForNewGame();
+  }
+}
+
+
+void RunGame()
+{
+  bool is_game_over = false;
+  char grid[3][3] = {
+    {' ', ' ', ' '},
+    {' ', ' ', ' '},
+    {' ', ' ', ' '}
+  };
+  PrintGrid(grid);
+  cout << "X starts!" << endl;
+  
+  while(!is_game_over)
+  {
+    cout << "================" << endl;
+    cout << "X moves" << endl;
+    bool x_moved = false;
+    while(!x_moved)
+    {
+      XMove(grid, x_moved, is_game_over);
+    }
+    if (is_game_over) break;
+    
+    cout << "================" << endl;
+    cout << "O moves" << endl;
+    bool o_moved = false;
+    while(!o_moved)
+    {
+      OMove(grid, o_moved, is_game_over);
+    }
+    
+  }
+}
+
+void AskForNewGame()
+{
+  char new_game;
+  cout << "Would you like to start a new game? (y/n): " << endl;
+  cin >> new_game;
+  if (new_game == 'y')
+  {
+    RunGame();
+  }
+}
