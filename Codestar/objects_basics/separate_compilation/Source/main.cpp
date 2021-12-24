@@ -5,9 +5,6 @@
 
 using namespace std;
 
-
-void PrintHouseData(const House& house);
-
 int main()
 {
   House my_house;
@@ -21,16 +18,11 @@ int main()
   your_house.SetNumWindows(10);
   your_house.SetColor("blue");
   
-  PrintHouseData(my_house);
-  PrintHouseData(your_house);
+  my_house.PrintHouseData();
+  your_house.PrintHouseData();
   
   return 0;
 }
 
-void PrintHouseData(const House& house)
-{
-  cout << "The house is " << house.GetColor()
-       << " and has " << house.GetNumStores() << " stores "
-       << "and " << house.GetNumWindows() << " windows." << endl;
-}
+
 

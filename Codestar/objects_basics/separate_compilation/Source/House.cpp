@@ -1,4 +1,5 @@
 #include "House.h"
+#include <iostream>
 
   void House::SetNumStores(int num_stores)
   {
@@ -27,5 +28,12 @@
   string House::GetColor() const
   {
     return color;
+  }
+
+  void House::PrintHouseData()
+  {
+    cout << "The house is " << House::GetColor()
+         << " and has " << House::GetNumStores() << " stores "
+         << "and " << House::GetNumWindows() << " windows." << endl;
   }
   

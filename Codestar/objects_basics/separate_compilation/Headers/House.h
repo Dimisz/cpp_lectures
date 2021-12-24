@@ -18,6 +18,8 @@ class House {
   
     string GetColor() const;
   
+    void PrintHouseData();
+  
   private:
     int num_stores;
     int num_windows;
