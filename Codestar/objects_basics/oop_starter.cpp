@@ -4,6 +4,7 @@
 using namespace std;
 
 
+
 class House {
   public:
     void SetNumStores(int num_stores)
@@ -23,7 +24,7 @@ class House {
     
     int GetNumWindows() const
     {
-      return this->num_windows;
+      return num_windows;
     }
     
     void SetColor(string color)
@@ -32,7 +33,7 @@ class House {
     }
     string GetColor() const
     {
-      return this->color;
+      return color;
     }
   
   private:
@@ -41,6 +42,9 @@ class House {
     string color;
   
 };
+
+void PrintHouseData(const House& house);
+
 int main()
 {
   House my_house;
@@ -54,13 +58,15 @@ int main()
   your_house.SetNumWindows(10);
   your_house.SetColor("blue");
   
-  cout << "My house is " << my_house.GetColor()
-       << " and has " << my_house.GetNumStores() << " stores "
-       << "and " << my_house.GetNumWindows() << " windows." << endl;
-  
-  cout << "Your house is " << your_house.GetColor()
-       << " and has " << your_house.GetNumStores() << " stores "
-       << "and " << your_house.GetNumWindows() << " windows." << endl;
+  PrintHouseData(my_house);
+  PrintHouseData(your_house);
   
   return 0;
+}
+
+void PrintHouseData(const House& house)
+{
+  cout << "The house is " << house.GetColor()
+       << " and has " << house.GetNumStores() << " stores "
+       << "and " << house.GetNumWindows() << " windows." << endl;
 }
