@@ -9,6 +9,11 @@ int main()
 {
   House my_house;
   House your_house;
+  House default_house;
+  House para_house(5, 40, "brown");
+  
+  para_house.PrintHouseData();
+  default_house.PrintHouseData();
   
   my_house.SetNumStores(2);
   my_house.SetNumWindows(6);
