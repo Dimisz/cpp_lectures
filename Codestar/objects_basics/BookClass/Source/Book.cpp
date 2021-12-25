@@ -28,7 +28,7 @@ int Book::GetNumPages() const
   return num_pages;
 }
 
-void Book::Describe() const
+void Book::Describe() const 
 {
   cout << "The book's title is: " << GetTitle() << endl;
   cout << "The book's author is: " << GetAuthor() << endl;
