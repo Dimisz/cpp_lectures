@@ -157,60 +157,66 @@ int main() {
    
     istringstream iss(command);
     string operation;
-    iss >> operation;
-    //cout << "Operation: " << operation << endl;
-    if (operation == "Print")
+    if(iss >> operation)
     {
-      db.Print();
-    }
-    else
-    {
-      string date;
-      iss >> date;
-      //VALIDATING DATE
-      //IF VALIDATED -> PROCEED
-      istringstream date_stream(date);
-      int year, month, day;
-      if (date_stream >> year)
+      //cout << "Operation: " << operation << endl;
+      if (operation == "Print")
       {
-        date_stream.ignore(1);
-        if(date_stream >> month)
+        db.Print();
+      }
+      else
+      {
+        string date;
+        iss >> date;
+        //VALIDATING DATE
+        //IF VALIDATED -> PROCEED
+        istringstream date_stream(date);
+        int year, month, day;
+        if (date_stream >> year)
         {
           date_stream.ignore(1);
-          if((date_stream >> day))
+          if(date_stream >> month)
           {
-            //Date validated
-            //Procceed to operations
-            //cout << boolalpha << PrepareDate(year, month, day) << endl;
-            string event;
-            iss >> event;
-            if (operation == "Add")
+            date_stream.ignore(1);
+            if((date_stream >> day))
             {
-              if(PrepareDate(year, month, day))
+              //Date validated
+              //Procceed to operations
+              //cout << boolalpha << PrepareDate(year, month, day) << endl;
+              string event;
+              iss >> event;
+              if (operation == "Add")
               {
-                Date d(year, month, day);
-                db.AddEvent(d, event);
+                if(PrepareDate(year, month, day))
+                {
+                  Date d(year, month, day);
+                  db.AddEvent(d, event);
+                }
               }
-            }
-            else if (operation == "Del")
-            {
-              if(PrepareDate(year, month, day))
+              else if (operation == "Del")
               {
-                Date d(year, month, day);
-                db.DeleteEvent(d, event);
+                if(PrepareDate(year, month, day))
+                {
+                  Date d(year, month, day);
+                  db.DeleteEvent(d, event);
+                }
               }
-            }
-            else if (operation == "Find")
-            {
-              if(PrepareDate(year, month, day))
+              else if (operation == "Find")
               {
-                Date d(year, month, day);
-                db.Find(d);
+                if(PrepareDate(year, month, day))
+                {
+                  Date d(year, month, day);
+                  db.Find(d);
+                }
+              }
+              else
+              {
+                cout << "Unknown command: " << operation << endl;
               }
             }
             else
             {
-              cout << "Unknown command: " << operation << endl;
+              cout << "Wrong date format: " << date << endl;
             }
           }
           else
@@ -221,12 +227,8 @@ int main() {
         else
         {
           cout << "Wrong date format: " << date << endl;
-        }
+        }//end of date validation
       }
-      else
-      {
-        cout << "Wrong date format: " << date << endl;
-      }//end of date validation
     }
 
 
