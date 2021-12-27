@@ -79,24 +79,24 @@ public:
   {
     db[date].insert(event);
   }
-  
-  bool DeleteEvent(const Date& date, const string& event)
+  //bool changed to void
+  void DeleteEvent(const Date& date, const string& event)
   {
     if (event.empty())
     {
       cout << "Deleted " << DeleteDate(date) << " events" << endl;
-      return true;
+      //return true;
     }
     else
     {
       if(db[date].erase(event))
       {
         cout << "Deleted successfully" << endl;
-        return true;
+        //return true;
       }
       else{
         cout << "Event not found" << endl;
-        return false;
+        //return false;
       }
     }
   }
