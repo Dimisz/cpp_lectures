@@ -112,7 +112,12 @@ public:
   {
     if (db.count(date) > 0)
     {
-      cout << "found" << endl;
+      //cout << "found" << endl;
+      //cout << db[date].at(0);
+      for (string i : db.at(date))
+      {
+        cout << i << endl;
+      }
     }
   }
   
