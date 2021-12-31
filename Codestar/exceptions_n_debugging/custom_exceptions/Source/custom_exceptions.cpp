@@ -28,6 +28,9 @@ void FeedKitty(int num_treats)
   {
     throw AngryCatException();
   }
+  else if(num_treats < 6){
+    throw AngryCatException("I'm still not happy");
+  }
   cout << "Kitty is happy with " << num_treats << " treats"
          << endl;
 }
